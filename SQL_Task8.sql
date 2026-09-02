@@ -79,3 +79,38 @@ select avg(amount) from transactions);
 select customer_name from customers 
 where city='Mangalore' and customer_id IN(
 select customer_id from transactions);
+
+select c.customer_id, c.customer_name
+FROM Customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM invoices i
+    WHERE c.customer_id = i.customer_id
+    AND i.payment_status = 'Paid'
+);
+
+select c.customer_id, c.customer_name
+FROM Customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM transactions t
+    WHERE c.customer_id = t.customer_id
+    AND t.amount>4500
+);
+
+select t1.transaction_id, t1.customer_id, t1.amount
+FROM transactions t1
+WHERE t1.amount > (
+    SELECT AVG(t2.amount)
+    FROM transactions t2
+    WHERE t2.customer_id = t1.customer_id
+);
+
+SELECT c.customer_id, c.customer_name
+FROM Customer c 
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM transactions t
+    WHERE c.customer_id = t.customer_id
+    AND c.city = 'Mangalore'
+);
