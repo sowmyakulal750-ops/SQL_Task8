@@ -82,7 +82,7 @@ select customer_id from transactions);
 
 select c.customer_id, c.customer_name
 FROM Customers c
-WHERE NOT EXISTS (
+WHERE  EXISTS (
     SELECT 1
     FROM invoices i
     WHERE c.customer_id = i.customer_id
@@ -91,7 +91,7 @@ WHERE NOT EXISTS (
 
 select c.customer_id, c.customer_name
 FROM Customers c
-WHERE NOT EXISTS (
+WHERE  EXISTS (
     SELECT 1
     FROM transactions t
     WHERE c.customer_id = t.customer_id
@@ -108,7 +108,7 @@ WHERE t1.amount > (
 
 SELECT c.customer_id, c.customer_name
 FROM Customer c 
-WHERE NOT EXISTS (
+WHERE  EXISTS (
     SELECT 1
     FROM transactions t
     WHERE c.customer_id = t.customer_id
